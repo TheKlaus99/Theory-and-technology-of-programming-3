@@ -11,7 +11,7 @@
 
 using namespace std;
 
-string filename = "input.txt";
+string filename = "input1.txt";
 
 int myHash(const string&);
 
@@ -103,123 +103,6 @@ int main() {
 	string a;
 	cin >> a;
 	Search(a, hash_to_entries, alltext);
-
-
-/*	string text = "";
-	char c;
-	printf("Text: ");
-	while ((c = getc(stdin)) != '\n')
-	{
-		if ((c < 32) || (c > 126))
-		{
-			printf("Error!\n");
-			fflush(stdin);
-			getchar();
-			return 0;
-		}
-		text.push_back(c);
-	}
-	if (text.length() < 1)
-	{
-		printf("Error!\n");
-		fflush(stdin);
-		getchar();
-		return 0;
-	}
-
-	printf("\n");
-	string sourceWord = "";
-	printf("Word: ");
-	while ((c = getc(stdin)) != '\n')
-	{
-		if ((c < 32) || (c > 126))
-		{
-			printf("Error!\n");
-			fflush(stdin);
-			getchar();
-			return 0;
-		}
-		sourceWord.push_back(c);
-	}
-	if (sourceWord.length() < 1)
-	{
-		printf("Error!\n");
-		fflush(stdin);
-		getchar();
-		return 0;
-	}
-
-	char stops[20] = { '.', ',', '!', '?', ':', ';', '"', '\'', '\n', ' ', '/', '\\', '|', '(', ')', '[', ']','{','}' };
-	int amountOfWords = 0;
-	bool wordFound = false;
-	bool anotherWordFound = false;
-	string word = "";
-
-	for (int i = 0; i < sourceWord.length(); i++)
-	{
-		if (isStopChar(sourceWord[i], stops, 20))
-		{
-			wordFound = false;
-			continue;
-		}
-		else
-		{
-			if (!wordFound)
-			{
-				wordFound = true;
-				amountOfWords++;
-				if (amountOfWords > 1) {
-					printf("Error!\n");
-					fflush(stdin);
-					getchar();
-					return 0;
-				}
-			}
-			word.push_back(sourceWord[i]);
-		}
-	}
-
-	int amountOfHashComps = 0;
-	int amountOfStrComps = 0;
-
-	printf("Searching word: ");
-	for (int i = 0; i < word.length(); i++) printf("%c", word[i]);
-	printf("\n\n");
-
-	printf("Words:\n");
-	string textWord = "";
-	for (int i = 0; i < text.length(); i++)
-	{
-		if (isStopChar(text[i], stops, 20))
-		{
-		checkWord:
-			if (textWord.length() > 0)
-			{
-				for (int j = 0; j < textWord.length(); j++)
-				{
-					printf("%c", textWord[j]);
-				}
-				printf("\n");
-				if (hashComp(textWord, word)) amountOfHashComps++;
-				if (strComp(textWord, word)) amountOfStrComps++;
-			}
-			textWord = "";
-		}
-		else
-		{
-			textWord.push_back(text[i]);
-		}
-	}
-	if (textWord.length() > 0) goto checkWord;
-
-	printf("\nHash: %d", amountOfHashComps);
-	printf("\nStrings: %d\n", amountOfStrComps);
-	printf("\nGOTOVO!\n");
-exit:
-	fflush(stdin);
-	getchar();
-	return 0;
-*/
 }
 
 int myHash(const string& str) {
@@ -286,15 +169,3 @@ bool GetColor(short& ret) {
 
 	return true;
 }
-
-
-/*bool strComp(string& word1, string& word2)
-{
-	if (word1.length() != word2.length()) return false;
-
-	for (int i = 0; i < word1.length(); i++)
-	{
-		if (word1[i] != word2[i]) return false;
-	}
-	return true;
-}*/
