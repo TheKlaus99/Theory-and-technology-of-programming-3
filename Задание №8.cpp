@@ -31,7 +31,7 @@ int main() {
 	CONSOLE_SCREEN_BUFFER_INFO start_attribute;
 	GetConsoleScreenBufferInfo(hStdOut, &start_attribute);
 	hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-	
+
 	map <int, string> hash_to_string;
 	map <int, vector<int> > hash_to_entries;
 	string tempstr, word = "";
@@ -62,13 +62,15 @@ int main() {
 
 		find_iterator = hash_to_string.find(temphash);
 		if (find_iterator == hash_to_string.end()) {
-			//cout << "Значения: " << word << " еще нет" << endl;
+
 			hash_to_string[temphash] = word;
 			hash_to_entries[temphash].push_back(alltext.length());
 		}
 
+		//
+
 		else {
-			//cout << "Уже есть!"<<endl;
+
 			hash_to_entries[temphash].push_back(alltext.length());
 		}
 		alltext += (tempstr + " ");
@@ -77,7 +79,7 @@ int main() {
 	map <int, string> ::iterator it = hash_to_string.begin();
 	cout << "Полученная хэш-таблица: " << endl;
 	printf("============================================================================\n");
-	for (int i = 0; it != hash_to_string.end(); it++, i++) {  // выводим их
+	for (int i = 0; it != hash_to_string.end(); it++, i++) { 
 		cout << i << ") Ключ = " << it->first << ". Значение = " << it->second << endl;
 	}
 	printf("============================================================================\n");
@@ -85,7 +87,7 @@ int main() {
 	printf("============================================================================\n");
 	for (map<int, vector<int> >::iterator it = hash_to_entries.begin(); it != hash_to_entries.end(); ++it)
 	{
-		cout << "Слово " << "\"" << hash_to_string[it->first]<< "\"" << " с хэш-ключом " << it->first << " начинаются на символах: ";
+		cout << "Слово " << "\"" << hash_to_string[it->first] << "\"" << " с хэш-ключом " << it->first << " начинаются на символах: ";
 		for (auto i : hash_to_entries[it->first])
 		{
 			cout << i << " ";
@@ -96,15 +98,128 @@ int main() {
 	printf("============================================================================\n");
 	cout << endl;
 
-	cout << "Введенный текст: " << alltext << endl;
+	cout << "Введенный текст: " << endl << alltext << endl << endl;
 	cout << "Введите слово для поиска:" << endl;
 	string a;
 	cin >> a;
 	Search(a, hash_to_entries, alltext);
 
 
+/*	string text = "";
+	char c;
+	printf("Text: ");
+	while ((c = getc(stdin)) != '\n')
+	{
+		if ((c < 32) || (c > 126))
+		{
+			printf("Error!\n");
+			fflush(stdin);
+			getchar();
+			return 0;
+		}
+		text.push_back(c);
+	}
+	if (text.length() < 1)
+	{
+		printf("Error!\n");
+		fflush(stdin);
+		getchar();
+		return 0;
+	}
 
+	printf("\n");
+	string sourceWord = "";
+	printf("Word: ");
+	while ((c = getc(stdin)) != '\n')
+	{
+		if ((c < 32) || (c > 126))
+		{
+			printf("Error!\n");
+			fflush(stdin);
+			getchar();
+			return 0;
+		}
+		sourceWord.push_back(c);
+	}
+	if (sourceWord.length() < 1)
+	{
+		printf("Error!\n");
+		fflush(stdin);
+		getchar();
+		return 0;
+	}
 
+	char stops[20] = { '.', ',', '!', '?', ':', ';', '"', '\'', '\n', ' ', '/', '\\', '|', '(', ')', '[', ']','{','}' };
+	int amountOfWords = 0;
+	bool wordFound = false;
+	bool anotherWordFound = false;
+	string word = "";
+
+	for (int i = 0; i < sourceWord.length(); i++)
+	{
+		if (isStopChar(sourceWord[i], stops, 20))
+		{
+			wordFound = false;
+			continue;
+		}
+		else
+		{
+			if (!wordFound)
+			{
+				wordFound = true;
+				amountOfWords++;
+				if (amountOfWords > 1) {
+					printf("Error!\n");
+					fflush(stdin);
+					getchar();
+					return 0;
+				}
+			}
+			word.push_back(sourceWord[i]);
+		}
+	}
+
+	int amountOfHashComps = 0;
+	int amountOfStrComps = 0;
+
+	printf("Searching word: ");
+	for (int i = 0; i < word.length(); i++) printf("%c", word[i]);
+	printf("\n\n");
+
+	printf("Words:\n");
+	string textWord = "";
+	for (int i = 0; i < text.length(); i++)
+	{
+		if (isStopChar(text[i], stops, 20))
+		{
+		checkWord:
+			if (textWord.length() > 0)
+			{
+				for (int j = 0; j < textWord.length(); j++)
+				{
+					printf("%c", textWord[j]);
+				}
+				printf("\n");
+				if (hashComp(textWord, word)) amountOfHashComps++;
+				if (strComp(textWord, word)) amountOfStrComps++;
+			}
+			textWord = "";
+		}
+		else
+		{
+			textWord.push_back(text[i]);
+		}
+	}
+	if (textWord.length() > 0) goto checkWord;
+
+	printf("\nHash: %d", amountOfHashComps);
+	printf("\nStrings: %d\n", amountOfStrComps);
+	printf("\nGOTOVO!\n");
+exit:
+	fflush(stdin);
+	getchar();
+	return 0;
+*/
 }
 
 int myHash(const string& str) {
@@ -138,37 +253,20 @@ void Search(const string& input_word, map <int, vector<int>>& entries, const str
 				for (int i = num; i < alltext.size(); i++)
 				{
 					if (alltext.substr(i, 1) == "!" || alltext.substr(i, 1) == "." || alltext.substr(i, 1) == " ") end = i;
-					//	cout << alltext.substr(i,  1) << endl;
+
 				}
 				if (input_word == alltext.substr(num, end))
 				{
 					count++;
 					ends.push_back(end);
 				}
-				//if (input_word == alltext.substr(i, alltext.find(alltext.substr) + alltext.substr(i).find(" ")))
-				//	cout<<"Позиция номер:" << alltext.find(alltext.substr(i))<< endl; //alltext.substr(i, alltext.find(alltext.substr) + alltext.substr(i).find(" "))<<endl;
-				//	cout<<"Слово из даты: "<< alltext.substr(i, alltext.find(alltext.substr) + alltext.substr(i).find(" "))
+				
 			}
 			short currentcolor;
 			GetColor(currentcolor);
-			//SetConsoleTextAttribute(hStdout, 10);
-			cout << "Слово: " << input_word << " встречается в тексте (по буквенное сравнение) " << find_iterator->second.size() << " раз" << endl;
-			//bool triger = false;
-			//for (int i = 0, j=0; i < alltext.length()-1; i++)
-			//{
-			//	if (i == entries[hashw][j])
-			//	{
-			//		SetConsoleTextAttribute(hStdout, 10);		
-			//		triger = true;
-			//	}
-			//	else if (triger|| ((i-1) == ends[j]))
-			//	{
-			//		SetConsoleTextAttribute(hStdout, currentcolor);
-			//		triger = false;
-			//		j++;
-			//	}
-			//	cout << alltext[i];
-			//}
+
+			//cout << "Слово: " << input_word << " встречается в тексте (по буквенное сравнение) " << find_iterator->second.size() << " раз" << endl;
+			
 			cout << endl;
 
 			SetConsoleTextAttribute(hStdout, currentcolor);
@@ -188,3 +286,15 @@ bool GetColor(short& ret) {
 
 	return true;
 }
+
+
+/*bool strComp(string& word1, string& word2)
+{
+	if (word1.length() != word2.length()) return false;
+
+	for (int i = 0; i < word1.length(); i++)
+	{
+		if (word1[i] != word2[i]) return false;
+	}
+	return true;
+}*/
