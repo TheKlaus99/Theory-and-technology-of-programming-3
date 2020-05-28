@@ -136,10 +136,10 @@ void Search(const string& input_word, map <int, vector<int>>& entries, const str
 	find_iterator = entries.find(hashw);
 
 	if (find_iterator == entries.end()) {
-		cout << "Слово: " << input_word << " не встречается в тексте" << endl;
+		cout << "Слово " << "\"" << input_word << "\"" << " не встречается в тексте" << endl;
 	}
 	else {
-		cout << "Слово: " << input_word << " встречается в тексте (по хэшу) " << find_iterator->second.size() << " раз(а)" << endl;
+		cout << "Слово " << "\"" << input_word << "\"" << " встречается в тексте (по хэшу) " << find_iterator->second.size() << " раз(а)" << endl;
 
 		if (find_iterator->second.size() > 1) {
 
